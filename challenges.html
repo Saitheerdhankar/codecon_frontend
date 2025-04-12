@@ -4,7 +4,193 @@
   <meta charset="UTF-8" />
   <title>CodeCon - Challenges</title>
   <style>
-    /* [Your existing CSS styles here] */
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #0f0f0f;
+      color: #fff;
+    }
+
+    nav {
+      background: #000;
+      padding: 15px 25px;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid #00ffc8;
+    }
+
+    nav .nav-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    nav .nav-links a {
+      color: #00ffc8;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+
+    nav .nav-links a:hover {
+      color: #ffffff;
+    }
+
+    .login-btn {
+      margin-left: auto;
+      background: #00ffc8;
+      color: #000;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+
+    .login-btn:hover {
+      background: #00cfa0;
+    }
+
+    .container {
+      padding: 40px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    h1 {
+      color: #00ffc8;
+      margin-bottom: 30px;
+    }
+
+    .challenge-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .challenge-card {
+      background: #121212;
+      padding: 20px;
+      border: 1px solid #00ffc8;
+      border-radius: 10px;
+      transition: transform 0.2s;
+    }
+
+    .challenge-card:hover {
+      transform: scale(1.03);
+    }
+
+    .challenge-card h3 {
+      color: #00ffc8;
+    }
+
+    .challenge-card p {
+      color: #c7fff6;
+    }
+
+    /* Bepo AI Assistant */
+    .ai-assistant {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 999;
+      display: flex;
+      align-items: flex-end;
+      gap: 15px;
+    }
+
+    .ai-icon {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background-image: url('image.png');
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      box-shadow: inset 0 0 8px #00ffc8, 0 0 15px rgba(0, 255, 200, 0.3);
+      cursor: pointer;
+    }
+
+    .eye-container {
+      position: absolute;
+      top: 26%;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 12px;
+    }
+
+    .eye {
+      width: 12px;
+      height: 12px;
+      background-color: #000;
+      border: 2px solid #00ffc8;
+      border-radius: 50%;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .pupil {
+      width: 6px;
+      height: 6px;
+      background: #00ffc8;
+      border-radius: 50%;
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      transition: all 0.1s ease-out;
+    }
+
+    .smile {
+      position: absolute;
+      bottom: 18%;
+      left: 50%;
+      width: 24px;
+      height: 10px;
+      border-bottom: 2px solid #00ffc8;
+      border-radius: 0 0 50px 50px;
+      transform: translateX(-50%);
+      opacity: 0.6;
+    }
+
+    .ai-chatbox {
+      display: none;
+      flex-direction: column;
+      background: rgba(0, 0, 0, 0.95);
+      border: 1px solid #00ffc8;
+      border-radius: 12px;
+      padding: 14px;
+      width: 240px;
+      box-shadow: 0 0 20px rgba(0, 255, 200, 0.15);
+      font-size: 14px;
+      color: #d0f0c0;
+    }
+
+    .ai-chatbox textarea {
+      width: 100%;
+      height: 60px;
+      margin-top: 10px;
+      border-radius: 8px;
+      padding: 8px;
+      background: #000;
+      color: #00ffc8;
+      border: 1px solid #00ffc8;
+      resize: none;
+    }
+
+    .ai-chatbox button {
+      margin-top: 10px;
+      padding: 8px;
+      background: #00ffc8;
+      border: none;
+      color: black;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .ai-chatbox button:hover {
+      background: #00cfa0;
+    }
   </style>
 </head>
 <body>
@@ -23,11 +209,26 @@
   <div class="container">
     <h1>Coding Challenges</h1>
     <div class="challenge-list" id="challenge-list">
-      <!-- Challenges will be dynamically loaded here -->
+      <div class="challenge-card">
+        <h3>FizzBuzz</h3>
+        <p>Print numbers from 1 to N, replacing multiples of 3 with "Fizz", 5 with "Buzz", and both with "FizzBuzz".</p>
+      </div>
+      <div class="challenge-card">
+        <h3>Palindrome Checker</h3>
+        <p>Write a function that checks whether a given string is a palindrome or not.</p>
+      </div>
+      <div class="challenge-card">
+        <h3>Two Sum</h3>
+        <p>Given an array and a target, return indices of two numbers that add up to the target.</p>
+      </div>
+      <div class="challenge-card">
+        <h3>Factorial</h3>
+        <p>Calculate the factorial of a given number using recursion.</p>
+      </div>
     </div>
   </div>
 
-  <!-- AI Assistant -->
+  <!-- Bepo Assistant -->
   <div class="ai-assistant">
     <div class="ai-chatbox" id="bepo-chat">
       <p><strong>Bepo:</strong> Ask me about your weak areas, and I’ll recommend challenges & courses!</p>
@@ -44,38 +245,14 @@
   </div>
 
   <script>
-    // Function to fetch challenges from the API
-    async function fetchChallenges() {
-      try {
-        const response = await fetch('https://your-api-endpoint.com/api/challenges'); // Replace with actual endpoint
-        const challenges = await response.json();
-        const challengeList = document.getElementById('challenge-list');
-
-        challenges.forEach(challenge => {
-          const card = document.createElement('div');
-          card.className = 'challenge-card';
-          card.innerHTML = `
-            <h3>${challenge.title}</h3>
-            <p>${challenge.description}</p>
-          `;
-          challengeList.appendChild(card);
-        });
-      } catch (error) {
-        console.error('Error fetching challenges:', error);
-      }
-    }
-
-    // Function to handle Bepo AI assistant
     async function handleBepoQuery() {
       const input = document.getElementById('bepo-input').value.trim();
       if (!input) return;
 
       try {
-        const response = await fetch('https://your-api-endpoint.com/api/bepo/ask', { // Replace with actual endpoint
+        const response = await fetch('https://codec-tek5.onrender.com/api/bepo/ask', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ message: input })
         });
         const data = await response.json();
@@ -85,7 +262,6 @@
       }
     }
 
-    // Event listeners
     document.getElementById('bepo-icon').addEventListener('click', () => {
       const chatbox = document.getElementById('bepo-chat');
       chatbox.style.display = chatbox.style.display === 'flex' ? 'none' : 'flex';
@@ -93,8 +269,16 @@
 
     document.getElementById('ask-bepo').addEventListener('click', handleBepoQuery);
 
-    // Initialize
-    fetchChallenges();
+    document.addEventListener('mousemove', (e) => {
+      const icon = document.getElementById('bepo-icon').getBoundingClientRect();
+      const centerX = icon.left + icon.width / 2;
+      const centerY = icon.top + icon.height / 2;
+      const deltaX = (e.clientX - centerX) / 20;
+      const deltaY = (e.clientY - centerY) / 20;
+      document.querySelectorAll('.pupil').forEach(pupil => {
+        pupil.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+      });
+    });
   </script>
 </body>
 </html>

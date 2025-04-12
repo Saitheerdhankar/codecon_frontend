@@ -1,0 +1,75 @@
+<!-- (your existing <head> and <body> content remains unchanged, picking up from where it cut off) -->
+
+<script>
+  async function runCode() {
+    const language = document.getElementById("language").value;
+    const code = document.getElementById("code").value;
+    const output = document.getElementById("output");
+    output.value = "Running...";
+
+    try {
+      const res = await fetch("https://codec-tek5.onrender.com/api/compiler/run", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ language, code })
+      });
+
+      const data = await res.json();
+      output.value = data.output || "No output.";
+    } catch (err) {
+      output.value = "Error occurred. Please try again.";
+    }
+  }
+
+  const bepoIcon = document.getElementById('bepo-icon');
+  const bepoChat = document.getElementById('bepo-chat');
+  const askButton = document.getElementById('ask-bepo');
+  const textarea = document.querySelector('.ai-chatbox textarea');
+  const pupils = document.querySelectorAll('.pupil');
+
+  // Toggle AI Chat Box
+  bepoIcon.addEventListener('click', () => {
+    bepoChat.style.display = bepoChat.style.display === 'flex' ? 'none' : 'flex';
+  });
+
+  // Eye movement tracking
+  document.addEventListener('mousemove', (e) => {
+    const icon = bepoIcon.getBoundingClientRect();
+    const centerX = icon.left + icon.width / 2;
+    const centerY = icon.top + icon.height / 2;
+    const deltaX = (e.clientX - centerX) / 20;
+    const deltaY = (e.clientY - centerY) / 20;
+
+    pupils.forEach(pupil => {
+      pupil.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+    });
+  });
+
+  // Bepo Chat Interaction
+  askButton.addEventListener('click', async () => {
+    const userInput = textarea.value.trim();
+    if (!userInput) return;
+
+    askButton.disabled = true;
+    askButton.innerText = "Thinking...";
+
+    try {
+      const res = await fetch("https://codec-tek5.onrender.com/api/bepo/ask", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: userInput })
+      });
+
+      const data = await res.json();
+      alert("Bepo: " + data.reply || "I don't know how to respond.");
+    } catch (err) {
+      alert("Bepo encountered an error.");
+    } finally {
+      askButton.disabled = false;
+      askButton.innerText = "Ask Bepo";
+    }
+  });
+</script>
+
+</body>
+</html>
